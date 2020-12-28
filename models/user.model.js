@@ -4,6 +4,8 @@ const SALT_WORK_FACTOR = 10;
 const EMAIL_PATTERN = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
 const PASSWORD_PATTERN = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
 
+const LANGUAGES = process.env.LIST_LANGUAGES.split(',') || ['es-ES'  ]
+
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -24,6 +26,36 @@ const userSchema = new mongoose.Schema(
       required: true,
       minlength: 8,
       match: [PASSWORD_PATTERN, "Invalid password pattern"],
+    },
+    name: {
+      type: String,
+      required: true,
+      minlength: 3,
+      maxlength: 15,
+    },
+    lastname: {
+      type: String,
+      required: true,
+      minlength: 3,
+      maxlength: 20,
+    },
+    about: {
+      type: String,
+      maxlength: 250,
+      default: '',
+    },
+    avatar: {
+      type: String,
+      default: '',
+    },
+    date_of_birth: {
+      type: Date,
+      default: new Date('January 01, 1980 00:00:01')
+    },
+    language: {
+      type: String,
+      enum: LANGUAGES,
+      default: 'es-ES'
     },
   },
   {

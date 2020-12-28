@@ -3,10 +3,16 @@ const createError = require("http-errors");
 const passport = require("passport");
 
 module.exports.getUsers = (req, res, next) => {
-  User.find()
+  User.find().lean()
     .then((users) => res.json(users))
     .catch(next);
 };
+
+module.exports.getUser = (req, res, next) => {
+    User.findOne({_id: req.params.id})
+        .then(user => res.json(user))
+        .catch(next)
+}
 
 //TODO delUser
 

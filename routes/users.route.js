@@ -6,6 +6,7 @@ const authController = require('../controllers/users.controller')
 
 
 // only for testing purposes
-router.get('/getUsers', secure.isAuthenticated, authController.getUsers)
+router.get('/', secure.isAuthenticated, authController.getUsers)
+router.get('/:id', secure.isAuthenticated, authController.getUser)
 
 module.exports = router;
