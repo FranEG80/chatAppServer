@@ -4,9 +4,12 @@ const router = express.Router();
 const secure = require('../middlewares/secure.mid')
 const authController = require('../controllers/users.controller')
 
+//* check all routes if isAuthenticated
+router.all('*', secure.isAuthenticated)
 
-// only for testing purposes
-router.get('/', secure.isAuthenticated, authController.getUsers)
-router.get('/:id', secure.isAuthenticated, authController.getUser)
+router.get('/:id', authController.getUser)
+
+//! only for testing purposes
+router.get('/', authController.getUsers)
 
 module.exports = router;

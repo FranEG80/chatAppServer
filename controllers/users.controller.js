@@ -9,7 +9,7 @@ module.exports.getUsers = (req, res, next) => {
 };
 
 module.exports.getUser = (req, res, next) => {
-    User.findOne({_id: req.params.id})
+    User.findOne({_id: req.dispatch.get('id')})
         .then(user => res.json(user))
         .catch(next)
 }

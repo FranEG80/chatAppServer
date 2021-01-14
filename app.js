@@ -28,6 +28,19 @@ app.use(cors)
 app.use(passport.initialize())
 app.use(passport.session())
 
+//? add dispatch to request
+app.use((req, res, next) => {
+    req.dispatch = {
+        getParams: () => req.params,
+        getBody: () => req.body,
+        getQuery: () => req.query,
+        getData: () => ({...req.body, ...req.params, ...req.query}),
+        isset: (key) =>  req.dispatch.getData().hasOwnProperty(key),
+        get: (key) => req.dispatch.isset(key) ? req.dispatch.getData()[key] : undefined,
+    }
+    next()
+})
+
 app.use('/', authRouter)
 app.use('/users', usersRouter)
 //TODO 

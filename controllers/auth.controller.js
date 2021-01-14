@@ -3,14 +3,15 @@ const createError = require('http-errors')
 const passport = require('passport')
 
 module.exports.register = (req, res, next) => {
-    const { username, email } = req.body
+    const body = req.dispatch.getBody()
+    const { username, email } = body
 
     User.findOne({ $or: [{username}, {email}]})
         .then(user => {
             if (user) {
                 throw createError(409, 'Email or username already regsitered')
             } else {
-                new User(req.body).save()
+                new User(body).save()
             }
         })
         .then(user => res.status(201).json(user))

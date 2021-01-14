@@ -26,15 +26,11 @@ const postData = (url, numResults) => {
                 username: user.login.username,
                 isNew: true
             }))
-            console.log(users)
-            const newUsers = new User(users)
             User.create(users)
                 .then(res => console.log({status: 'OK', response: res}))
             
         })
-        .catch(error => {
-            console.error(error => console.log({status: 'KO', error}))
-        })
+        .catch(error => console.error({status: 'KO', error}))
 }
 
 postData(API_URL, NUM_USERS)
